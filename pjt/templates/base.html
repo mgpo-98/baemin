@@ -34,8 +34,9 @@
               <!-- 로그인한 유저 -->
               {% else %}
               <li class="nav-item">
-                <a class="nav-link disabled" href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }} 님</a>
+                <a class="nav-link disabled" >{{ request.user }} 님</a>
               </li>
+              {% endif %}
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
