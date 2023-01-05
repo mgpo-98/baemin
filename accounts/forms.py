@@ -9,13 +9,11 @@ class CustomUserCreationForm(UserCreationForm):
             "username",
             "password1",
             "password2",
-            "last_name",
             "email",
         )
         labels = {
-            "username": "아이디",
+            "username": "닉네임(아이디)",
             "password1": "비밀번호",
             "password2": "비밀번호 확인",
-            "last_name": "이름",
             "email": "이메일",
         }
