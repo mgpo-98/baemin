@@ -1,19 +1,64 @@
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    UserChangeForm,
+    AuthenticationForm,
+    UsernameField,
+)
+
+# from .models import User
+
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .models import Profile
 
 
 class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+
+    # username => 닉네임(아이디)
+    username = forms.CharField(
+        label="닉네임(아이디)", widget=forms.TextInput(attrs={"placeholder": "닉네임(아이디)"})
+    )
+    # first_name => 이름
+    first_name = forms.CharField(
+        label="이름", widget=forms.TextInput(attrs={"placeholder": "이름"})
+    )
+    # last_name => 성별
+
+    class Meta:
         model = get_user_model()
-        fields = (
-            "username",
-            "password1",
-            "password2",
-            "email",
-        )
-        labels = {
-            "username": "닉네임(아이디)",
-            "password1": "비밀번호",
-            "password2": "비밀번호 확인",
-            "email": "이메일",
-        }
+        fields = ("username", "first_name", "email")
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["image"]
+
+
+# class CustomUserChangeForm(UserChangeForm):
+#     class Meta():
+#         model = get_user_model
+#         fields = ('email', 'first_name', 'username')
+
+
+class CustomUserChangeForm(UserChangeForm):
+    password = None
+
+    # username => 닉네임(아이디)
+    username = forms.CharField(
+        label="닉네임(아이디)", widget=forms.TextInput(attrs={"placeholder": "닉네임(아이디)"})
+    )
+    # first_name => 이름
+    first_name = forms.CharField(
+        label="이름", widget=forms.TextInput(attrs={"placeholder": "이름"})
+    )
+    # last_name => 성별
+    class Meta:
+        model = get_user_model()
+        fields = ("username", "first_name", "email")
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        label="닉네임(아이디)", widget=forms.TextInput(attrs={"autofocus": True})
+    )
