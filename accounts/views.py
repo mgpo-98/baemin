@@ -70,3 +70,12 @@ def detail(request, pk):
 def logout(request):
     auth_logout(request)
     return redirect("/")
+
+
+# 회원 탈퇴
+def delete(request):
+    if request.user.is_authenticated:
+        request.user.delete()
+        auth_logout(request)
+
+    return redirect("/")
