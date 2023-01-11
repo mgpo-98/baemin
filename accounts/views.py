@@ -95,4 +95,3 @@ def update(request, pk):
         "form": form,
     }
     return render(request, "accounts/update.html", context)
-.sss
