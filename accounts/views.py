@@ -79,3 +79,20 @@ def delete(request):
         auth_logout(request)
 
     return redirect("/")
+
+
+@login_required
+def update(request, pk):
+    user = User.objects.get(pk=pk)
+    if request.method == "POST":
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:detail", pk)
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/update.html", context)
+.sss
