@@ -73,3 +73,10 @@ def update(request, pk):
                 review_form.save()
                 messages.success(request, "리뷰가 수정되었습니다.")
                 return redirect("reviews:detail", review.pk)
+        else:
+            review_form = ReviewForm(instance=review)
+        context = {"review_form": review_form}
+        return render(request, "reviews/form.html", context)
+    else:
+        messages.warning(request, "작성자만 수정할 수 있습니다.")
+        return redirect("reviews:detail", review.pk)
