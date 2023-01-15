@@ -9,3 +9,12 @@ from .models import Review, Comment
 from reviews.forms import ReviewForm, CommentForm
 from django.core.paginator import Paginator
 from django.db.models import Count
+
+
+def index(request):
+    reviews = Review.objects.order_by("-pk")
+    request.GET.get("shop_name")
+    context = {
+        "reviews": reviews,
+    }
+    return render(request, "reviews/index.html", context)
