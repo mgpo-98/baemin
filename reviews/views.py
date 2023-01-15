@@ -40,3 +40,13 @@ def create(request, item_id):
         review_form = ReviewForm()
     context = {"review_form": review_form, "item_title": request.GET.get("item_title")}
     return render(request, "reviews/form.html", context=context)
+
+
+@login_required
+def delete(request, pk):
+    review = Review.objects.get(pk=pk)
+    if request.method == "POST":
+        review.delete()
+        return redirect("reviews:index")
+    context = {"review": review}
+    return render(request, "reviews/detail.html", context)
