@@ -61,3 +61,15 @@ def detail(request, pk):
         "comment_form": comment_form,
     }
     return render(request, "reviews/detail.html", context)
+
+
+@login_required
+def update(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    if request.user == review.user:
+        if request.method == "POST":
+            review_form = ReviewForm(request.POST, request.FILES, instance=review)
+            if review_form.is_valid():
+                review_form.save()
+                messages.success(request, "리뷰가 수정되었습니다.")
+                return redirect("reviews:detail", review.pk)
