@@ -31,8 +31,6 @@ def create(request, item_id):
             review = review_form.save(commit=False)
             # 로그인한 유저 => 작성자네!
             review.user = request.user
-            review.item_id = item_id
-            review.item_title = item_title
             review.save()
             messages.success(request, "리뷰 작성이 완료되었습니다.")
             return redirect("reviews:index")
