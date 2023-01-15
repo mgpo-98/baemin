@@ -48,3 +48,16 @@ def delete(request, pk):
         return redirect("reviews:index")
     context = {"review": review}
     return render(request, "reviews/detail.html", context)
+
+
+def detail(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+
+    comment_form = CommentForm()
+    # template에 객체 전달
+    context = {
+        "review": review,
+        "comments": review.comment_set.all(),
+        "comment_form": comment_form,
+    }
+    return render(request, "reviews/detail.html", context)
