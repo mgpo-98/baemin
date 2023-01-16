@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+
+<h1>리뷰상세 페이지</h1>
+
+<div>
+    <!-- 주문한  매장이름 -->
+    <p>명륜진사갈비</p>
+
+    <!-- 리뷰작성한 유저 -->
+    <p>{{ review.user.username }}</p>
+    <!-- 주문한 날자 -->
+    <p>매뉴 주문한 날 : {{ review.order_at.isoforamt }}</p>
+
+    <!-- 만약 리뷰사진이 있으면 -->
+    {% if review.image %}
+    <div>
+        <img src="{{ review.image.url }}" width="400px" height="300px"  >
+    </div>
+    {% else %}
+    {% endif %}
+
+    <!-- 리뷰내용 -->
+    <p>{{ review.conent }}</p>
+    <!-- 좋아요 버튼 -->
+    {% if request.user.is_authenticated %}
+    <div class="d-flex justify-content-between">
+        <form data-review-id='{{ review.pk }}' id='like-btn' class="like-heart">
+            {% csrf_token %}
+            <button style='background-color:transparent; border:none;' class='review-detail-like-btn' type='submit'>
+                {% if request.user in review.like_users.all %}
+                <i style='color:red' class="bi bi-heart-fill"></i>
+                <span id='review-like-user-cnt'>{{ review.like_users.count }}</span>
+                {% else %}
+                <i style='color:red' class="bi bi-heart"></i>
+                <span id='review-like-user-cnt'>{{ review.like_users.count }}</span>
+                {% endif %}
+            </button>
+        </form>
+       
+    </div>
+
+    {% endif %}
+</div>
+
+{% endblock content %}
