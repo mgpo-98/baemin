@@ -6,5 +6,32 @@
 <h1>리뷰 목록</h1>
 
 
+<a href="{% url'reviews:create' %}">리뷰 작성</a>
+
+
+<div class="row row-cols-4 g-2">
+    {% for review in posts %}
+    <div class='col'>
+      <article class="card h-100">
+        <div class="card-header text-center" style="font-family: 'SDSamliphopangche_Basic';">
+          👤 {{ review.user.username }}
+        </div>
+        {% if review.image %}
+        <img src="{{ review.image.url }}" class="card-img-top" alt="..." style='height:278.4px; object-fit: cover;'>
+        {% else %}
+        
+        {% endif %}
+        <div class="card-body">
+        
+          <p class="card-text" style="font-family: 'SDSamliphopangche_Basic';">
+            {{ review.content|truncatechars:50 }}
+          </p>
+        </div>
+        <div class="card-footer text-center" style="font-family: 'SDSamliphopangche_Basic';">
+          <a href="{% url 'reviews:detail' review.pk %}" class='text-decoration-none'
+            style="font-family: 'SDSamliphopangche_Basic'; color:rgb(214, 154, 93);">상세보기</a>
+        </div>
+      </article>
+    </div>
 
 {% endblock content %}

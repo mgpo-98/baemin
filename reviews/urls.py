@@ -14,7 +14,7 @@ urlpatterns = [
     # 리뷰 삭제
     path("<int:pk>/delete/", views.delete, name="delete"),
     # 리뷰 좋아요
-    # path('<int:pk>/like/', views.like, name='like'),
+    path("<int:pk>/like/", views.like, name="like"),
     # 댓글 작성
     # path('<int:pk>/comments/', views.comment_create, name='comment_create'),
     # 댓글 삭제

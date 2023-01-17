@@ -80,3 +80,21 @@ def update(request, pk):
     else:
         messages.warning(request, "작성자만 수정할 수 있습니다.")
         return redirect("reviews:detail", review.pk)
+
+
+# 좋아요
+@require_POST
+def like(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    # print('hi') 요청 확인 위함
+    # 만약 로그인한 유저(request.user)가 이 글을 좋아요 눌렀다면,
+    if request.user in review.like_users.all():
+        # 좋아요 삭제하고
+        review.like_users.remove(request.user)
+        is_liked = False
+    else:  # 좋아요 누르지 않은 상태라면 좋아요에 추가하고
+        review.like_users.add(request.user)
+        is_liked = True
+        # 상세 페이지로 redirect
+    context = {"isLiked": is_liked, "likeCount": review.like_users.count()}
+    return JsonResponse(context)
